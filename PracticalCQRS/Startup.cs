@@ -8,6 +8,7 @@ using Core.DataAccessors.Command.Interfaces;
 using Core.DataAccessors.Command.Repositories;
 using Core.DataAccessors.Query.Interfaces;
 using Core.DataAccessors.Query.Repositories;
+using CQDomain.Aggregates;
 using CQDomain.Commands;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
@@ -46,7 +47,7 @@ namespace PracticalCQRS
 
             services.AddMediatR(
                 typeof(Startup).GetTypeInfo().Assembly, 
-                typeof(ICommandHandler<>).GetTypeInfo().Assembly
+                typeof(AggregateRoot).GetTypeInfo().Assembly
             );
         }
 

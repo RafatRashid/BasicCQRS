@@ -6,6 +6,7 @@ using Core.DataAccessors.Query.Interfaces;
 using Core.Dtos;
 using Core.Entities;
 using CQDomain.Commands;
+using CQDomain.Queries;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -25,9 +26,22 @@ namespace PracticalCQRS.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<Employee> Get()
+        public async Task<ResponseDto> Get()
         {
-            return _empRepository.GetAll();
+            var resp = new ResponseDto();
+            try
+            {
+                var employees = await _mediator.Send(new GetAllEmployee());
+                resp.Success = true;
+                resp.Data = employees;
+            }
+            catch(Exception ex)
+            {
+                resp.Success = false;
+                resp.Message = ex.Message;
+            }
+
+            return resp;
         }
 
         [HttpPost]
