@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using Core;
 using Core.DataAccessors.Command.Interfaces;
 using Core.DataAccessors.Command.Repositories;
+using Core.DataAccessors.Query.Interfaces;
+using Core.DataAccessors.Query.Repositories;
 using CQDomain.Commands;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
@@ -36,7 +38,12 @@ namespace PracticalCQRS
             services.AddDbContext<CqrsContext>(context =>
                 context.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"))
             );
+            
+            
             services.AddTransient(typeof(ICommandRepository<>), typeof(CommandRepository<>));
+            services.AddTransient(typeof(IQueryRepository<>), typeof(QueryRepository<>));
+
+
             services.AddMediatR(
                 typeof(Startup).GetTypeInfo().Assembly, 
                 typeof(ICommandHandler<>).GetTypeInfo().Assembly

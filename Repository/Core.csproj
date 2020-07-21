@@ -9,9 +9,4 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.6" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="DataAccessors\Query\Interfaces\" />
-    <Folder Include="DataAccessors\Query\Repositories\" />
-  </ItemGroup>
-
 </Project>

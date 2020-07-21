@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Core.DataAccessors.Query.Interfaces;
 using Core.Dtos;
 using Core.Entities;
 using CQDomain.Commands;
@@ -16,12 +17,20 @@ namespace PracticalCQRS.Controllers
     public class EmployeeController : ControllerBase
     {
         private readonly IMediator _mediator;
-        public EmployeeController(IMediator mediator)
+        private readonly IQueryRepository<Employee> _empRepository;
+        public EmployeeController(IMediator mediator, IQueryRepository<Employee> repository)
         {
             _mediator = mediator;
+            _empRepository = repository;
         }
 
+        [HttpGet]
+        public IEnumerable<Employee> Get()
+        {
+            return _empRepository.GetAll();
+        }
 
+        [HttpPost]
         public async Task<ResponseDto> Post([FromBody]Employee employee)
         {
             var resp = new ResponseDto();
